@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "MOONFALL: EVA-9"
+description = "A playable top-down lunar survival game. EVA-9 must activate three rescue relays, collect oxygen and suit repairs, avoid moving debris, and reach extraction before nightfall."
+version = "1.0.0"
+id = "artifacts/moonfall-eva-9"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21480
+
+[services.development]
+run = "pnpm --filter @workspace/moonfall-eva-9 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/moonfall-eva-9", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/moonfall-eva-9/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21480"
+BASE_PATH = "/"
